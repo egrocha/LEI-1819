@@ -1,0 +1,53 @@
+function loginFacebook() {
+    FB.getLoginStatus(function(response) {
+        if(response.status === 'connected'){
+            console.log(response)
+            $.post(
+                "https://localhost:3000/auth/loginFacebook", 
+                {"id": response.authResponse.userID, "token": response.authResponse.accessToken}, 'json').error(function(){
+                    alert("an error occurred");
+                }).success(function(){
+                    console.log('success')
+                    window.location.href = '/user';
+                });
+            //testAPI();
+            /*FB.api('/me', {fields: 'name'}, function(response){
+                $.post(
+                    "http://localhost:3000/auth/loginFacebook", 
+                    {"id": response.id}, 'json').error(function(){
+                        alert("an error occurred");
+                    }).success(function(){
+                        console.log('success')
+                        window.location.href = '/user';
+                    });
+            })*/
+        }
+    });
+}
+
+function addFacebook() {
+    FB.getLoginStatus(function(response) {
+        console.log(response);
+        if(response.status === 'connected'){
+            $.post(
+                "https://localhost:3000/auth/addFacebook", 
+                {"id": response.authResponse.userID, "token": response.authResponse.accessToken}, 'json').error(function(){
+                    alert("an error occurred");
+                }).success(function(){
+                    console.log('success')
+                    window.location.href = '/user';
+                });
+            //testAPI();
+            /*FB.api('/me', {fields: 'name, email'}, function(response){
+                $.post(
+                    "https://localhost:3000/auth/addFacebook", 
+                    {"id": response.id}, 'json').error(function(){
+                        alert("an error occurred");
+                    }).success(function(){
+                        console.log('facebook account added succesfully')
+                        window.location.href = '/user'
+                    });
+            })*/
+        }
+    });
+}

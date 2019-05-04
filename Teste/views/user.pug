@@ -7,7 +7,7 @@ block content
 	script.
 		window.fbAsyncInit = function() {
 		FB.init({
-		appId      : '2148390798714928',
+		appId      : '2288489154550105',
 		cookie     : true,
 		xfbml      : true,
 		version    : 'v3.2'
@@ -30,33 +30,32 @@ block content
 			.w3-container
 				h4 Informações pessoais
 				table.w3-table-all
-					each u in user
-						tr
-							th Email
-							td= u.username
-						tr
-							if u.idGoogle
-								th ID Google
-								td= u.idGoogle
-						tr
-							if u.idFacebook
-								th ID Facebook
-								td= u.idFacebook
-						tr
-							if u.idGithub
-								th ID Github
-								td= u.idGithub
-						tr
-							if u.idTwitter
-								th ID Twitter
-								td= u.idTwitter
+					tr
+						th Email
+						td= user.username
+					tr
+						if user.idGoogle
+							th ID Google
+							td= user.idGoogle
+					tr
+						if user.idFacebook
+							th ID Facebook
+							td= user.idFacebook
+					tr
+						if user.idGithub
+							th ID Github
+							td= user.idGithub
+					tr
+						if user.idTwitter
+							th ID Twitter
+							td= user.idTwitter
 			hr
 			.w3-container
 				h4 Associar contas
 
 			.w3-container
 				//Google
-				.g-signin2(data-onsuccess='addAccount' data-failure='onFailure' data-theme='dark')
+				.g-signin2(data-onsuccess='addGoogle' data-failure='onFailure' data-theme='dark')
 				script(src="javascripts/googlescript.js")
 				//a(href='' onclick='signOut();') Sign out
 				script.
@@ -69,7 +68,8 @@ block content
 				
 				//Facebook
 				//fb:login-button(scope='public_profile, email' onlogin='checkLoginState();' data-size='large' data-button-type='login_with' data-auto-logout-link='true' data-use-continue-as='false')
-				fb:login-button(scope='public_profile' onlogin='checkLoginState();')
+				script(src='javascripts/facebookscript.js')
+				fb:login-button(scope='public_profile' onlogin='addFacebook')
 				br
 				//a(href='' onclick='logOut();') Log out
 				script.
@@ -94,8 +94,11 @@ block content
 					}
 
 				//Github
-				a(href='http://localhost:3000/login/loginGithub') LOGIN GITHUB
+				a(href='https://localhost:3000/auth/loginGithub') ADD GITHUB
 				br
 
 				//Twitter
-				a(href='http://localhost:3000/login/loginTwitter') LOGIN TWITTER
+				a(href='https://localhost:3000/auth/loginTwitter') ADD TWITTER
+
+			footer.w3-container.w3-blue-grey
+				a(href='https://localhost:3000') Voltar à página inicial

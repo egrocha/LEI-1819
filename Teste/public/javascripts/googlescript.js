@@ -12,17 +12,17 @@ function onSignIn(googleUser) {
 
     var email = profile.getEmail()
     var id_token = googleUser.getAuthResponse().id_token
+    console.log(id_token)
 
     //logout after receiving token
     gapi.auth2.getAuthInstance().disconnect()
 
     $.post(
-        "http://localhost:3000/auth/loginGoogle", 
-         {"token" : id_token, "email" : email}, 'json').error(function(){
+        "https://localhost:3000/auth/loginGoogle", 
+         {"token": id_token, "email": email}, 'json').error(function(){
             alert("an error occurred");
-         }).success(function(){
-             console.log('success')
-            window.location.href = '/user';
+         }).success(function(data){
+            window.location.href = data
          });
 
     //Send google user data to backend
@@ -39,20 +39,29 @@ function onSignIn(googleUser) {
     //window.location.href = '/user'
 }
 
-function addAccount(googleUser){
+function addGoogle(googleUser){
     var profile = googleUser.getBasicProfile();
     var id_token = googleUser.getAuthResponse().id_token
     var email = profile.getEmail()
 
     gapi.auth2.getAuthInstance().disconnect()
-    
+    /*
     var xhr = new XMLHttpRequest()
     xhr.open('POST', 'auth/addGoogle', true)
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.send(JSON.stringify({
         token: id_token,
         email: email
-    }))
+    }))*/
+
+    $.post(
+        "https://localhost:3000/auth/addGoogle", 
+        {"token" : id_token, "email" : email}, 'json').error(function(){
+            alert("an error occurred");
+        }).success(function(){
+            console.log('success')
+            window.location.href = '/user';
+        });
 }
 
 function onFailure(){

@@ -1,0 +1,14 @@
+doctype html
+head
+	title Authorize
+body
+	p Hello.
+	p= client.name
+	p is requesting access to your account.
+	p Do you approve?
+	p= transactionID
+	form(action='/oauth/dialog/authorize/decision' method='post')
+		input(name='transaction_id' type='hidden' value= transactionID)
+		div
+			input(type='submit' value='Allow')
+			input(type='submit' value='Deny' name='cancel')

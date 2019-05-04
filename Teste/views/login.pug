@@ -1,14 +1,13 @@
 extends layout
 
 block content
-	script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript")
 	#fb-root
 	script(async='' defer='' src='https://connect.facebook.net/pt_PT/sdk.js#xfbml=1&version=v3.2&appId=2148390798714928&autoLogAppEvents=1')
 
 	script.
 		window.fbAsyncInit = function() {
 		FB.init({
-		appId      : '2148390798714928',
+		appId      : '2288489154550105',
 		cookie     : true,
 		xfbml      : true,
 		version    : 'v3.2'
@@ -28,7 +27,7 @@ block content
 			header.w3-container.w3-blue-grey
 				h3 Login
 		.w3-container
-			form.w3-container(action='/login/processaLogin', method='POST', id='login_form')
+			form.w3-container(action='/login', method='POST', id='login_form')
 				p
 				label.w3-text-black
 					b Username
@@ -52,8 +51,9 @@ block content
 				});
 			}
 	.w3-container
+		script(src='javascripts/facebookscript.js')
 		//.fb:login-button(scope='public_profile, email' onlogin='checkLoginState();' data-size='large' data-button-type='login_with' data-auto-logout-link='true' data-use-continue-as='false')
-		fb:login-button(scope='public_profile' onlogin='checkLoginState();')
+		fb:login-button(scope='public_profile' onlogin='loginFacebook')
 		br
 		//a(href='' onclick='logOut();') Log out
 
@@ -62,7 +62,10 @@ block content
 				FB.getLoginStatus(function(response) {
 					console.log(response);
 					if(response.status === 'connected'){
-						testAPI();
+						//testAPI();
+						FB.api('/me', {fields: 'name'}, function(response){
+							
+						})
 					}
 				});
 			}
@@ -79,10 +82,10 @@ block content
 			}
 
 	.w3-container
-		a(href='http://localhost:3000/login/loginGithub') LOGIN GITHUB
+		a(href='https://localhost:3000/auth/loginGithub') LOGIN GITHUB
 
 	.w3-container
-		a(href='http://localhost:3000/login/loginTwitter') LOGIN TWITTER
+		a(href='https://localhost:3000/auth/loginTwitter') LOGIN TWITTER
 
 		footer.w3-container.w3-blue-grey
 			a(href="/") Voltar à página principal
